@@ -102,6 +102,11 @@ task('versions') {
 	}
 }
 
+task getVersion << {
+	println version
+}
+
+
 afterEvaluate {
 	if (project.version.endsWith('SNAPSHOT') || project.version.endsWith('preview')) {
 		nexus.repositoryUrl = null
