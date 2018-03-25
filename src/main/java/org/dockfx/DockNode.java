@@ -113,8 +113,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
 
   /**
    * Boolean property maintaining whether this node is currently maximized.
-   * 
-   * @defaultValue false
+   *
    */
   private BooleanProperty maximizedProperty = new SimpleBooleanProperty(false) {
 
@@ -551,8 +550,6 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
   /**
    * Object property maintaining bidirectional state of the caption graphic for this node with the
    * dock title bar or stage.
-   * 
-   * @defaultValue null
    */
   public final ObjectProperty<Node> graphicProperty() {
     return graphicProperty;
@@ -576,8 +573,6 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
   /**
    * Boolean property maintaining bidirectional state of the caption title for this node with the
    * dock title bar or stage.
-   * 
-   * @defaultValue "Dock"
    */
   public final StringProperty titleProperty() {
     return titleProperty;
@@ -602,8 +597,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
    * Boolean property maintaining whether this node is currently using a custom title bar. This can
    * be used to force the default title bar to show when the dock node is set to floating instead of
    * using native window borders.
-   * 
-   * @defaultValue true
+   *
    */
   public final BooleanProperty customTitleBarProperty() {
     return customTitleBarProperty;
@@ -630,8 +624,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
 
   /**
    * Boolean property maintaining whether this node is currently floating.
-   * 
-   * @defaultValue false
+   *
    */
   public final BooleanProperty floatingProperty() {
     return floatingProperty;
@@ -658,8 +651,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
 
   /**
    * Boolean property maintaining whether this node is currently floatable.
-   * 
-   * @defaultValue true
+   *
    */
   public final BooleanProperty floatableProperty() {
     return floatableProperty;
@@ -685,8 +677,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
 
   /**
    * Boolean property maintaining whether this node is currently closable.
-   * 
-   * @defaultValue true
+   *
    */
   public final BooleanProperty closableProperty() {
     return closableProperty;
@@ -751,8 +742,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
 
   /**
    * Boolean property maintaining whether this node is currently resizable.
-   * 
-   * @defaultValue true
+   *
    */
   public final BooleanProperty resizableProperty() {
     return stageResizableProperty;
@@ -776,8 +766,6 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
   /**
    * Boolean property maintaining whether this node is currently docked. This is used by the dock
    * pane to inform the dock node whether it is currently docked.
-   * 
-   * @defaultValue false
    */
   public final BooleanProperty dockedProperty() {
     return dockedProperty;
@@ -821,7 +809,6 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
   /**
    * Boolean property maintaining whether this node is currently tabbed.
    *
-   * @defaultValue false
    */
   public final BooleanProperty tabbedProperty() {
     return tabbedProperty;
