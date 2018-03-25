@@ -11,6 +11,8 @@ This library was created to fill the void for docking frameworks available in th
 
 <img src="http://i.imgur.com/b2Oouif.png">
 
+[![Build Status](https://travis-ci.org/gunmetal313/DockFX.svg?branch=master)](https://travis-ci.org/gunmetal313/DockFX)
+
 DockFX has a number of features:
 * Full documentation
 * Gratis and open source

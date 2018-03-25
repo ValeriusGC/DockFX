@@ -1,0 +1,62 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+	jcenter()
+	mavenCentral()
+}
+
+group = 'org.dockfx'
+version = '0.2-SNAPSHOT'
+
+description = "DockFX"
+
+mainClassName = "org.dockfx.demo.DockFX"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+
+apply plugin: 'checkstyle'
+configurations {
+	checkstyleConfig
+}
+def versions = [
+		checkstyle: '8.8',
+]
+dependencies {
+	checkstyleConfig("com.puppycrawl.tools:checkstyle:${versions.checkstyle}") {
+		transitive = false
+	}
+	checkstyle "com.puppycrawl.tools:checkstyle:${versions.checkstyle}"
+}
+checkstyle {
+	configFile = rootProject.file('google_checks.xml')
+	showViolations true
+	sourceSets = [project.sourceSets.main]
+}
+
+tasks.withType(Checkstyle).each { checkstyleTask ->
+	checkstyleTask.doLast {
+		reports.all { report ->
+			if (report.name == "xml") {
+				def outputFile = report.destination
+				if (outputFile.exists() && outputFile.text.contains("<error ")) {
+					//throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
+					println "There were checkstyle warnings! For more info check $outputFile"
+				}
+			}
+		}
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/java'
+		}
+	}
+}
+
+

@@ -10,3 +10,8 @@ dockfxdemo.jar
 .git/modules
 /bin
 target
+/build
+/.gradle
+.idea
+/out
+*.iml
