@@ -9,20 +9,36 @@ plugins {
 }
 
 apply plugin: 'java'
-apply plugin: 'application'
 
 repositories {
 	jcenter()
 	mavenCentral()
 }
 
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/java'
+		}
+	}
+	test {
+		java {
+			srcDirs 'src/test/java'
+		}
+	}
+	demo {
+		java {
+			srcDirs 'src/demo/java'
+		}
+		compileClasspath += sourceSets.main.runtimeClasspath
+		runtimeClasspath += sourceSets.main.runtimeClasspath
+	}
+}
 
 group = 'org.dockfx'
-version = '0.2-SNAPSHOT'
+version = '0.3-SNAPSHOT'
 
 description = "DockFX"
-
-mainClassName = "org.dockfx.demo.DockFX"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -42,6 +58,7 @@ dependencies {
 		transitive = false
 	}
 	checkstyle "com.puppycrawl.tools:checkstyle:${versions.checkstyle}"
+	testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 checkstyle {
@@ -64,10 +81,36 @@ tasks.withType(Checkstyle).each { checkstyleTask ->
 	}
 }
 
-sourceSets {
-	main {
-		java {
-			srcDir 'src/main/java'
-		}
+task wrapper(type: Wrapper) {
+	gradleVersion = '4.6'
+	distributionUrl = "https://services.gradle.org/distributions/" +
+			"gradle-${gradleVersion}-all.zip"
+}
+
+task('versions') {
+	group 'help'
+	description 'Prints tool versions and useful environment variables.'
+	doLast {
+		println "JAVA_OPTS:      ${System.env.JAVA_OPTS ?: "[]"}"
+		println "JAVA_HOME:      ${System.env.JAVA_HOME}"
+		println "Java version:   ${System.env.JAVA_VERSION}"
+		println "Gradle version: ${gradle.gradleVersion}"
 	}
 }
+
+task('sourceJar',type: Jar) {
+	group 'Build'
+	description 'Assembles a JAR containing the source code.'
+	classifier 'sources'
+	from sourceSets.main.allJava
+}
+
+task('javadocJar',type: Jar) {
+	group 'Build'
+	description 'Assembles a JAR containing the Javadoc.'
+	classifier 'javadoc'
+	from javadoc
+}
+
+jar.finalizedBy('sourceJar')
+jar.finalizedBy('javadocJar')
