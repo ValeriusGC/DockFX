@@ -2,6 +2,9 @@ buildscript {
 	repositories {
 		jcenter()
 	}
+	dependencies {
+		classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+	}
 }
 
 plugins {
@@ -9,6 +12,7 @@ plugins {
 }
 
 apply plugin: 'java'
+apply plugin: 'com.bmuschko.nexus'
 
 repositories {
 	jcenter()
@@ -35,7 +39,7 @@ sourceSets {
 	}
 }
 
-group = 'org.dockfx'
+group = 'com.github.gunmetal313.dockfx'
 version = '0.3-SNAPSHOT'
 
 description = "DockFX"
@@ -98,19 +102,41 @@ task('versions') {
 	}
 }
 
-task('sourceJar',type: Jar) {
-	group 'Build'
-	description 'Assembles a JAR containing the source code.'
-	classifier 'sources'
-	from sourceSets.main.allJava
+afterEvaluate {
+	if (project.version.endsWith('SNAPSHOT') || project.version.endsWith('preview')) {
+		nexus.repositoryUrl = null
+		nexus.snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+	}
 }
 
-task('javadocJar',type: Jar) {
-	group 'Build'
-	description 'Assembles a JAR containing the Javadoc.'
-	classifier 'javadoc'
-	from javadoc
+modifyPom {
+	project {
+		name 'DockFX'
+		description 'This library was created to fill the void for docking frameworks available in the JavaFX RIA platform'
+		url 'https://github.com/gunmetal313/DockFX'
+		packaging 'jar'
+		licenses {
+			license {
+				name 'GNU Lesser General Public License v3.0'
+				url 'https://github.com/gunmetal313/DockFX/blob/master/LICENSE'
+				distribution 'repo'
+			}
+		}
+		scm {
+			url 'scm:git@github.com:gunmetal313//DockFX.git'
+			connection 'scm:git@github.com:gunmetal313/DockFX.git'
+			developerConnection 'scm:git@github.com:gunmetal313/DockFX.git'
+		}
+		developers {
+			developer {
+				id 'gunmetal313'
+				name 'Ivan Kulikov'
+			}
+		}
+	}
 }
 
-jar.finalizedBy('sourceJar')
-jar.finalizedBy('javadocJar')
+nexus {
+	repositoryUrl = null
+	sign = true
+}

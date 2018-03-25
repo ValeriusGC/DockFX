@@ -15,3 +15,5 @@ target
 .idea
 /out
 *.iml
+# Gradle.properties has GPG info, and we don't want that checked in.
+/gradle.properties

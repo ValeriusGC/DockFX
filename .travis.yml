@@ -2,6 +2,8 @@ language: java
 jdk:
    - oraclejdk8
 sudo: false
+before_install:
+  - chmod +x travis/initiate-publish.sh
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -14,3 +16,8 @@ cache:
 script:
   - ./gradlew assemble
   - ./gradlew checkstyleMain
+after_success:
+  - travis/initiate-publish.sh
+env:
+  global:
+  - secure: cAFJTl7Zj4zrgQz5+6EthD3XXeSRWKQ6Vxq0u/r+ajdx3YVNuUGA9FNKmN9arZ0E/5vBlEgcAtoMrYW0xRkWKgZTgawhdyOyedEy1vK+nkOsCUeOmMh3jRrFhsoSqUExCNFa6K/kUyRTsgRH+BI/1oJYc5TKuLrFSnLmQ9JFFJynZ6JrDyXl8sAV1gPKMw4efY0WlCLuP15xmeORHZHGLJAYmHqs6hvrbS9trGHd659NJbVEZCG1yibJ2Vx9H9JAB22wvwodx51P2JC03+ivcbF3s4QSqQLbjAFW7Ic2EVYHp5jxER/ka+JwC0wuCG62KQNRFU5LK77IoK3JaV2YyCqJoffg/HIJqht0C8jWnW5Y/QLtdhIG/c1dS+2LQRkLv93DZH+ShWs7cQeYsQPTHCtV8OMD9P48W5B6+q2qu4q9H9gunWE2K7Ba3nx+9pQlSvE+nOskY8ekUr68SltFIcY+CoDC12jP5uMhwQKSMvgxIs9wUgvljejwT/fZHHwtmaT1Kv5UQr9LIXGGqFRuABppwoabLShvSARzApS8RQlMIGMy0C3dBH2WGpNzWVLIDYQPJMK2TlyZG5AWyCcXQuxz9gAj3nAPe9D5LSGB3LuJKG3Hf3ew/+BHQMWkg9qw7EspGQC7Cd8GFXvxADDZYF0swis+mqmjDkLxtq2HIQA=
